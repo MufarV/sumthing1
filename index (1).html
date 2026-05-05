@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumthing - Pesan Sekarang!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Fungsi ini dipindahkan ke sini agar langsung tersedia saat onerror dipanggil
+        function handleImageError() {
+            const logo = document.getElementById('mainLogo');
+            const fallback = document.getElementById('logoFallback');
+            if (logo) logo.style.display = 'none';
+            if (fallback) fallback.style.display = 'flex';
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff9f0;
+            color: #2B0A06;
+        }
+        .bg-sumthing-orange { background-color: #F39200; }
+        .text-sumthing-orange { color: #F39200; }
+        .border-sumthing-dark { border-color: #2B0A06; }
+        
+        .header-bg {
+            background-color: #fbbf24;
+            background-image: radial-gradient(#d97706 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+
+        .btn-primary {
+            background-color: #F39200;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #bf7300;
+        }
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #bf7300;
+        }
+        .card {
+            background: white;
+            border: 2px solid #2B0A06;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .logo-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .logo-sticker {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 9999px;
+            border: 8px solid white;
+            box-shadow: 0 0 0 4px #2B0A06, 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            border: 8px solid white;
+            box-shadow: 0 0 0 4px #2B0A06;
+            background-color: #F39200;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        input, select {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 10px;
+            width: 100%;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #F39200;
+        }
+    </style>
+</head>
+<body class="pb-10">
+
+    <!-- Header Section -->
+    <header class="text-center py-10 px-4 header-bg border-b-4 border-sumthing-dark">
+        <div class="logo-container">
+            <!-- Image with Error Handling -->
+            <img id="mainLogo" 
+                 src="Gemini_Generated_Image_s0zries0zries0zr.png" 
+                 alt="Logo Sumthing" 
+                 class="logo-sticker"
+                 onerror="handleImageError()">
+            <!-- Fallback Icon -->
+            <div id="logoFallback" class="logo-fallback">
+                🥟
+            </div>
+        </div>
+        <h1 class="text-4xl font-bold text-sumthing-dark mb-2 drop-shadow-sm">Sumthing</h1>
+        <p class="bg-white/90 inline-block px-4 py-1 rounded-full text-sm font-bold border border-sumthing-dark">
+            "Bernutrisi dan ramah di kantong"
+        </p>
+    </header>
+
+    <main class="max-w-lg mx-auto px-4 mt-8">
+        <form id="orderForm" class="space-y-6">
+            
+            <!-- Identitas Pelanggan -->
+            <section class="card p-6 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 flex items-center">
+                    <span class="mr-2">👤</span> Informasi Pemesan
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Nama Lengkap</label>
+                        <input type="text" id="customerName" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Nomor WhatsApp</label>
+                        <input type="tel" id="customerWA" placeholder="Contoh: 08123456789" required>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Varian Menu -->
+            <section class="card p-6 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 flex items-center">
+                    <span class="mr-2">🥟</span> Pilih Menu
+                </h2>
+                <div id="menuList" class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-orange-50 rounded-xl border border-orange-100">
+                        <div>
+                            <h3 class="font-bold">Siomay Original</h3>
+                            <p class="text-sm text-gray-600">Rp 15.000 / porsi</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" onclick="changeQty('item1', -1)" class="w-8 h-8 rounded-full bg-white border border-gray-300 font-bold">-</button>
+                            <span id="qty-item1" class="font-bold w-4 text-center">0</span>
+                            <button type="button" onclick="changeQty('item1', 1)" class="w-8 h-8 rounded-full bg-sumthing-orange text-white font-bold">+</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-orange-50 rounded-xl border border-orange-100">
+                        <div>
+                            <h3 class="font-bold">Dimsum Mix (5 pcs)</h3>
+                            <p class="text-sm text-gray-600">Rp 20.000 / porsi</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" onclick="changeQty('item2', -1)" class="w-8 h-8 rounded-full bg-white border border-gray-300 font-bold">-</button>
+                            <span id="qty-item2" class="font-bold w-4 text-center">0</span>
+                            <button type="button" onclick="changeQty('item2', 1)" class="w-8 h-8 rounded-full bg-sumthing-orange text-white font-bold">+</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-orange-50 rounded-xl border border-orange-100">
+                        <div>
+                            <h3 class="font-bold">Siomay Kuah Pedas</h3>
+                            <p class="text-sm text-gray-600">Rp 18.000 / porsi</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" onclick="changeQty('item3', -1)" class="w-8 h-8 rounded-full bg-white border border-gray-300 font-bold">-</button>
+                            <span id="qty-item3" class="font-bold w-4 text-center">0</span>
+                            <button type="button" onclick="changeQty('item3', 1)" class="w-8 h-8 rounded-full bg-sumthing-orange text-white font-bold">+</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pengambilan -->
+            <section class="card p-6 shadow-sm">
+                <h2 class="text-xl font-bold mb-4 flex items-center">
+                    <span class="mr-2">🕒</span> Waktu Pengambilan
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Metode</label>
+                        <select id="pickupMethod" required>
+                            <option value="Ambil di Tempat">Ambil di Tempat (Self Pickup)</option>
+                            <option value="COD">COD (Sekitar Area)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Tanggal Pengambilan</label>
+                        <input type="date" id="pickupDate" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Sesi Jam</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-yellow-50 transition">
+                                <input type="radio" name="pickupTime" value="10.00-11.00" class="w-4 h-4 mr-3" checked>
+                                <span>10.00 - 11.00</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-yellow-50 transition">
+                                <input type="radio" name="pickupTime" value="13.00-14.00" class="w-4 h-4 mr-3">
+                                <span>13.00 - 14.00</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-yellow-50 transition">
+                                <input type="radio" name="pickupTime" value="16.30-17.30" class="w-4 h-4 mr-3">
+                                <span>16.30 - 17.30</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Total & Submit -->
+            <div class="sticky bottom-4 z-10">
+                <div class="card p-4 bg-white shadow-2xl border-2 border-sumthing-dark">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-bold text-lg">Total Pesanan:</span>
+                        <span id="totalDisplay" class="text-2xl font-bold text-sumthing-orange">Rp 0</span>
+                    </div>
+                    <button type="button" onclick="sendToWhatsApp()" class="w-full py-4 text-white font-bold text-xl rounded-xl btn-primary flex items-center justify-center space-x-2">
+                        <span>Kirim Pesanan via WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Footer & Social -->
+    <footer class="mt-12 text-center text-sm text-gray-500">
+        <p class="mb-4">Follow us on Instagram</p>
+        <a href="https://instagram.com/sumthing_id" target="_blank" class="inline-flex items-center space-x-2 bg-white px-4 py-2 rounded-full border border-gray-300 font-semibold text-sumthing-dark hover:bg-gray-50">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>@sumthing_id</span>
+        </a>
+        <p class="mt-8">&copy; 2024 Sumthing. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const menuData = {
+            item1: { name: "Siomay Original", price: 15000, qty: 0 },
+            item2: { name: "Dimsum Mix (5 pcs)", price: 20000, qty: 0 },
+            item3: { name: "Siomay Kuah Pedas", price: 18000, qty: 0 }
+        };
+
+        function changeQty(itemId, delta) {
+            const item = menuData[itemId];
+            item.qty = Math.max(0, item.qty + delta);
+            document.getElementById(`qty-${itemId}`).innerText = item.qty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            for (let key in menuData) {
+                total += menuData[key].price * menuData[key].qty;
+            }
+            document.getElementById('totalDisplay').innerText = "Rp " + total.toLocaleString('id-ID');
+            return total;
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('customerName').value;
+            const wa = document.getElementById('customerWA').value;
+            const method = document.getElementById('pickupMethod').value;
+            const date = document.getElementById('pickupDate').value;
+            const time = document.querySelector('input[name="pickupTime"]:checked').value;
+            const total = updateTotal();
+
+            if (!name || !wa || !date) {
+                alert("Mohon lengkapi nama, WhatsApp, dan tanggal pengambilan ya!");
+                return;
+            }
+
+            let itemDetails = "";
+            let hasOrder = false;
+            for (let key in menuData) {
+                if (menuData[key].qty > 0) {
+                    itemDetails += `- ${menuData[key].name} (${menuData[key].qty}x): Rp ${(menuData[key].price * menuData[key].qty).toLocaleString('id-ID')}\n`;
+                    hasOrder = true;
+                }
+            }
+
+            if (!hasOrder) {
+                alert("Pilih minimal satu menu dulu ya!");
+                return;
+            }
+
+            const businessWA = "6281234567890";
+            const message = `*HALO SUMTHING! ADA PESANAN BARU* 🥟\n\n` +
+                            `*Detail Pelanggan:*\n` +
+                            `Nama: ${name}\n` +
+                            `WA: ${wa}\n\n` +
+                            `*Pesanan:*\n${itemDetails}\n` +
+                            `*Total Bayar: Rp ${total.toLocaleString('id-ID')}*\n\n` +
+                            `*Informasi Pengambilan:*\n` +
+                            `Metode: ${method}\n` +
+                            `Tanggal: ${date}\n` +
+                            `Jam: ${time}\n\n` +
+                            `Terima kasih!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${businessWA}?text=${encodedMessage}`, '_blank');
+        }
+
+        document.getElementById('pickupDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
